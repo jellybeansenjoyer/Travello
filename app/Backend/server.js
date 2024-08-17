@@ -78,7 +78,7 @@ app.post('/api/auth/register', async (req, res) => {
       res.status(401).json({ message: 'Token is not valid' });
     }
   };
-  
+   
   // Example protected route
   app.get('/api/protected', authMiddleware, async (req, res) => {
     const user = await prisma.user.findUnique({ where: { id: req.user.id } });
