@@ -1,11 +1,15 @@
+import org.jetbrains.kotlin.storage.CacheResetOnProcessCanceled.enabled
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("kotlin-kapt")
 }
 
 android {
     namespace = "com.example.travello"
     compileSdk = 34
+
 
     defaultConfig {
         applicationId = "com.example.travello"
@@ -33,9 +37,17 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+   buildFeatures{
+       dataBinding = true
+   }
 }
 
 dependencies {
+    //retrofit dependencies
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.okhttp)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
