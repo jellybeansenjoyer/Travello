@@ -18,12 +18,15 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        switchActivity(SignUpFragment());
+
     }
 
     fun switchActivity(fragment: Fragment){
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.container,fragment)
             addToBackStack(fragment.toString());
+            commit()
         }
     }
 }
