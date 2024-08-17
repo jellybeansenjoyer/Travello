@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:orientation="vertical"
+    android:background="@drawable/hero_bg"
     tools:context=".SignUpFragment">
 
         <androidx.cardview.widget.CardView
@@ -14,6 +15,7 @@
             android:layout_margin="30dp"
             card_view:layout_constraintTop_toTopOf="parent"
             card_view:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="0.9"
             android:id="@+id/sign_up_form"
             card_view:cardCornerRadius="30dp"
             card_view:cardElevation="19dp"
@@ -121,7 +123,7 @@
                             android:layout_marginBottom="15dp"
                             card_view:layout_constraintBottom_toTopOf="@id/or"
                             android:backgroundTint="@color/orange_light"
-                            card_view:layout_constraintTop_toBottomOf="@id/password"
+                            card_view:layout_constraintTop_toBottomOf="@id/confirm_password"
                             card_view:layout_constraintStart_toStartOf="parent"
                             card_view:layout_constraintEnd_toEndOf="parent" />
 
@@ -209,10 +211,6 @@
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
@@ -228,7 +226,8 @@
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="10dp"
-            android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="15sp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
