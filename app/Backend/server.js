@@ -14,7 +14,7 @@ const prisma = new PrismaClient();
 const PORT = process.env.PORT || 5000;
 // Register a new user
 app.post('/api/auth/register', async (req, res) => {
-    const { email, password } = req.body;
+    const { name, email, password } = req.body;
    
     try {
       const existingUser = await prisma.user.findUnique({ where: { email } });
@@ -24,7 +24,7 @@ app.post('/api/auth/register', async (req, res) => {
     
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = await prisma.user.create({
-        data: { email, password: hashedPassword },
+        data: { name:name, email:email, password: hashedPassword },
       });
   
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {

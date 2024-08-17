@@ -22,7 +22,7 @@ class SignUpFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_sign_up,container, false)
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up, container, false)
         return mBinding.root;
     }
 
@@ -30,24 +30,37 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         authRepository = AuthRepository(this.requireContext())
         mBinding.signUpTextClickable.isClickable = true;
-        Log.e("Asdfd",mBinding.signUpTextClickable.isClickable.toString())
         mBinding.signUpTextClickable.setOnClickListener {
-            Log.e("got","git")
-            (activity as MainActivity).switchActivity(SignInFragment(),false);
+            (activity as MainActivity).switchActivity(SignInFragment(), false);
         }
         mBinding.signUpButton.setOnClickListener {
             val email = mBinding.email.text.toString()
             val password = mBinding.password.text.toString()
+            val name = mBinding.Name.text.toString()
+            val confirmPassword = mBinding.confirmPassword.text.toString()
+            if (!email.isNullOrBlank() && !email.isNullOrEmpty() && !password.isNullOrEmpty() && !password.isNullOrBlank()
+                && !confirmPassword.isNullOrEmpty() && !confirmPassword.isNullOrBlank() && !name.isNullOrBlank() && !name.isNullOrEmpty()
+                ) {
+                if(confirmPassword.equals(password)){
+                    authRepository.signup(name, email, password) { token ->
+                        if (token != null) {
+                            // Login successful, proceed to the next screen
+                            (activity as MainActivity).switchActivity(
+                                TemporarySuccessFragment(),
+                                false
+                            );
 
-            authRepository.login(email, password) { token ->
-                if (token != null) {
-                    // Login successful, proceed to the next screen
-                    (activity as MainActivity).switchActivity(TemporarySuccessFragment(),false);
-
-                } else {
-                    // Show error message
-                    Toast.makeText(requireContext(), "Login failed", Toast.LENGTH_SHORT).show()
+                        } else {
+                            // Show error message
+                            Toast.makeText(requireContext(), "Sign up failed", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    }
+                }else{
+                    Toast.makeText(requireContext(), "Passwords don't match", Toast.LENGTH_SHORT).show()
                 }
+            }else{
+                Toast.makeText(requireContext(), "Either of Fields are empty", Toast.LENGTH_SHORT).show()
             }
         }
     }
