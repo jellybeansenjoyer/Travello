@@ -49,6 +49,10 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.okhttp)
 
+    //Google oauth
+    implementation(libs.gms.play.services.auth)
+
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
