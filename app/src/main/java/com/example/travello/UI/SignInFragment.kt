@@ -28,14 +28,23 @@ class SignInFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
-    fun googleInit(){
+    private fun fetchGoogleClientId() {
+        authRepository.getGoogleClientId { clientId ->
+            if (clientId != null) {
+                googleInit(clientId)
+            } else {
+                Toast.makeText(requireContext(), "Client ID error", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    fun googleInit(clientId:String){
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.server_client_id))
+            .requestIdToken(clientId)
             .requestEmail()
             .build()
 
          mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-
     }
 
     override fun onCreateView(
@@ -51,7 +60,7 @@ class SignInFragment : Fragment() {
 
         authRepository = AuthRepository(requireContext())
 
-        googleInit()
+        fetchGoogleClientId()
 
         mBinding.loginTextClickable.setOnClickListener {
             (activity as MainActivity).switchActivity(SignUpFragment(),false);
@@ -88,18 +97,18 @@ class SignInFragment : Fragment() {
     }
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
-//        try {
+        try {
             val account = completedTask.getResult(ApiException::class.java)
             val idToken = account.idToken
             val email = account.email
             val displayName = account.displayName
             Log.e("Google Sign-In","IdToken: "+idToken+" Email: "+email+" DisplayName: "+displayName);
             (activity as MainActivity).switchActivity(TemporarySuccessFragment(),false);
-//        } catch (e: ApiException) {
-//            // Handle sign in failure
-//            Log.e("Google Sign-In",e.toString())
-//            Log.e("Google Sign-In", "signInResult:failed code=" + e.statusCode)
-//        }
+        } catch (e: ApiException) {
+            // Handle sign in failure
+            Log.e("Google Sign-In",e.toString())
+            Log.e("Google Sign-In", "signInResult:failed code=" + e.statusCode)
+        }
     }
 
 }

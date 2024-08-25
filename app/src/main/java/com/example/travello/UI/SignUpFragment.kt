@@ -52,8 +52,9 @@ class SignUpFragment : Fragment() {
 
                         } else {
                             // Show error message
-                            Toast.makeText(requireContext(), "Sign up failed", Toast.LENGTH_SHORT)
-                                .show()
+                            Log.e("TAG","erroir")
+//                            Toast.makeText(requireContext(), "Sign up failed", Toast.LENGTH_SHORT)
+//                                .show()
                         }
                     }
                 }else{
